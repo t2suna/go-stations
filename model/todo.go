@@ -3,11 +3,11 @@ package model
 type (
 	// A TODO expresses ...
 	TODO struct {
-		ID          int    `json:id`
-		Subject     string `json:subject`
-		Description string `json:description`
-		CreatedAt   string `json:created_at`
-		UpdatedAt   string `json:updated_at`
+		ID          int      `json:id`
+		Subject     string   `json:subject`
+		Description string   `json:description`
+		CreatedAt   struct{} `json:created_at`
+		UpdatedAt   struct{} `json:updated_at`
 	}
 
 	// A CreateTODORequest expresses ...
