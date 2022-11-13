@@ -19,7 +19,7 @@ type (
 	}
 	// A CreateTODOResponse expresses ...
 	CreateTODOResponse struct {
-		ToDo TODO
+		TODO TODO `json:todo`
 	}
 
 	// A ReadTODORequest expresses ...
