@@ -42,9 +42,8 @@ func (s *TODOService) CreateTODO(ctx context.Context, subject, description strin
 	}
 
 	defer stmt.Close()
-	row := stmt.QueryRowContext(ctx, id)
 	var TODO model.TODO
-	row.Scan(TODO)
+	stmt.QueryRowContext(ctx, id).Scan(&TODO)
 	return &TODO, nil
 }
 
