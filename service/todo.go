@@ -35,6 +35,7 @@ func (s *TODOService) CreateTODO(ctx context.Context, subject, description strin
 	if err != nil {
 		log.Fatal(err)
 	}
+	log.Println(id)
 
 	stmt, err := s.db.PrepareContext(ctx, confirm)
 	if err != nil {
