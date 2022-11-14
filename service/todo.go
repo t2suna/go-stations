@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"database/sql"
+	"log"
 
 	"github.com/TechBowl-japan/go-stations/model"
 )
@@ -25,28 +26,26 @@ func (s *TODOService) CreateTODO(ctx context.Context, subject, description strin
 		insert  = `INSERT INTO todos(subject, description) VALUES(?, ?)`
 		confirm = `SELECT subject, description, created_at, updated_at FROM todos WHERE id = ?`
 	)
-	/*
-		result, err := s.db.ExecContext(ctx, insert, subject, description)
-		if err != nil {
-			log.Fatal(err)
-		}
-		id, err := result.LastInsertId()
-		if err != nil {
-			log.Fatal(err)
-		}
 
-		stmt, err := s.db.PrepareContext(ctx, confirm)
-		if err != nil {
-			log.Fatal(err)
-		}
+	result, err := s.db.ExecContext(ctx, insert, subject, description)
+	if err != nil {
+		log.Fatal(err)
+	}
+	id, err := result.LastInsertId()
+	if err != nil {
+		log.Fatal(err)
+	}
 
-		defer stmt.Close()
-		row := stmt.QueryRowContext(ctx, id)
-		var response model.CreateTODOResponse
-		row.Scan(response.TODO)
-		return &response.TODO, nil
-	*/
-	return nil, nil
+	stmt, err := s.db.PrepareContext(ctx, confirm)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer stmt.Close()
+	row := stmt.QueryRowContext(ctx, id)
+	var response model.CreateTODOResponse
+	row.Scan(response.TODO)
+	return &response.TODO, nil
 }
 
 // ReadTODO reads TODOs on DB.
