@@ -43,9 +43,9 @@ func (s *TODOService) CreateTODO(ctx context.Context, subject, description strin
 
 	defer stmt.Close()
 	row := stmt.QueryRowContext(ctx, id)
-	var response model.CreateTODOResponse
-	row.Scan(response.TODO)
-	return &response.TODO, nil
+	var TODO model.TODO
+	row.Scan(TODO)
+	return &TODO, nil
 }
 
 // ReadTODO reads TODOs on DB.
