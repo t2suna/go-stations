@@ -43,7 +43,10 @@ func (s *TODOService) CreateTODO(ctx context.Context, subject, description strin
 
 	defer stmt.Close()
 	var TODO model.TODO
-	stmt.QueryRowContext(ctx, id).Scan(&TODO)
+	err = stmt.QueryRowContext(ctx, id).Scan(&TODO)
+	if err != nil {
+		log.Fatal(err)
+	}
 	return &TODO, nil
 }
 
