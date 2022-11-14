@@ -40,13 +40,17 @@ func (s *TODOService) CreateTODO(ctx context.Context, subject, description strin
 	if err != nil {
 		log.Fatal(err)
 	}
-
 	defer stmt.Close()
+
 	var TODO model.TODO
 	TODO.ID = int(id)
 	err = stmt.QueryRowContext(ctx, id).Scan(&TODO.Subject, &TODO.Description, &TODO.CreatedAt, &TODO.UpdatedAt)
-	if err != nil {
+	switch {
+	case err == sql.ErrNoRows:
+		log.Fatalf("no row with id %d", id)
+	case err != nil:
 		log.Fatal(err)
+
 	}
 	return &TODO, nil
 }
