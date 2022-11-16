@@ -18,4 +18,4 @@
 node_modules
 .DS_Store
 .techtrain/config.toml
-_test/sta8/temp_test.db
+temp_test.db
