@@ -3,7 +3,6 @@ package service
 import (
 	"context"
 	"database/sql"
-	"log"
 
 	"github.com/TechBowl-japan/go-stations/model"
 )
@@ -26,19 +25,18 @@ func (s *TODOService) CreateTODO(ctx context.Context, subject, description strin
 		insert  = `INSERT INTO todos(subject, description) VALUES(?, ?)`
 		confirm = `SELECT subject, description, created_at, updated_at FROM todos WHERE id = ?`
 	)
-
 	result, err := s.db.ExecContext(ctx, insert, subject, description)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 	id, err := result.LastInsertId()
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 
 	stmt, err := s.db.PrepareContext(ctx, confirm)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 	defer stmt.Close()
 
@@ -47,9 +45,9 @@ func (s *TODOService) CreateTODO(ctx context.Context, subject, description strin
 	err = stmt.QueryRowContext(ctx, id).Scan(&TODO.Subject, &TODO.Description, &TODO.CreatedAt, &TODO.UpdatedAt)
 	switch {
 	case err == sql.ErrNoRows:
-		log.Fatalf("no row with id %d", id)
+		return nil, err
 	case err != nil:
-		log.Fatal(err)
+		return nil, err
 
 	}
 	return &TODO, nil
