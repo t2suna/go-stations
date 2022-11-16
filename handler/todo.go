@@ -23,7 +23,7 @@ func NewTODOHandler(svc *service.TODOService) *TODOHandler {
 }
 
 func (h *TODOHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	if r.Method == "Post" {
+	if r.Method == http.MethodPost {
 		var todoRequest model.CreateTODORequest
 		err := json.NewDecoder(r.Body).Decode(&todoRequest)
 		if err != nil {
