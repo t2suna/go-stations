@@ -12,6 +12,6 @@ func NewPanicHandler() *PanicHandler {
 
 // ServeHTTP implements http.Handler interface.
 func (h *PanicHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	panic("Hey")
+	panic("STEP1:I'm panic")
 
 }
