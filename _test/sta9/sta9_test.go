@@ -39,6 +39,7 @@ func TestStation9(t *testing.T) {
 	r := router.NewRouter(todoDB)
 	srv := httptest.NewServer(r)
 	defer srv.Close()
+	defer todoDB.Close()
 
 	testcases := map[string]struct {
 		Subject            string
